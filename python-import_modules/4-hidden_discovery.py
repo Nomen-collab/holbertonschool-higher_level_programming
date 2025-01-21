@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-import importlib.util
+
 import sys
+import types
 
 if __name__ == "__main__":
-    # Chemin du fichier .pyc
-    file_path = '/tmp/hidden_4.pyc'
+    # Charger le module compilé
+    module_name = "hidden_4"
+    module_path = "/tmp/hidden_4.pyc"
 
-    # Chargement dynamique du fichier .pyc
-    spec = importlib.util.spec_from_file_location("hidden_4", file_path)
-    hidden_4 = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(hidden_4)
+    # Charger le module en utilisant imp
+    sys.path.insert(0, "/tmp/")  # Ajouter le dossier /tmp au path pour l'importation
+    hidden_module = __import__(module_name)
 
-    # Récupération des noms définis dans le module et filtrage
-    names = dir(hidden_4)
+    # Filtrer les noms qui ne commencent pas par '__' et trier par ordre alphabétique
+    names = dir(hidden_module)
     for name in sorted(names):
-        if not name.startswith("__"):  # Ignorer les noms qui commencent par "__"
+        if not name.startswith("__"):
             print(name)
+
