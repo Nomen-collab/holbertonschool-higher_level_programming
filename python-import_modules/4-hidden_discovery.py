@@ -1,20 +1,10 @@
 #!/usr/bin/python3
 
-import sys
-import types
-
 if __name__ == "__main__":
-    # Charger le module compilé
-    module_name = "hidden_4"
-    module_path = "/tmp/hidden_4.pyc"
+    """Print all names defined by hidden_4 module."""
+    import hidden_4
 
-    # Charger le module en utilisant imp
-    sys.path.insert(0, "/tmp/")  # Ajouter le dossier /tmp au path pour l'importation
-    hidden_module = __import__(module_name)
-
-    # Filtrer les noms qui ne commencent pas par '__' et trier par ordre alphabétique
-    names = dir(hidden_module)
-    for name in sorted(names):
-        if not name.startswith("__"):
+    names = dir(hidden_4)
+    for name in names:
+        if name [:2] != "__":
             print(name)
-
