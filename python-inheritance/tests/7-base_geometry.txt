@@ -1,0 +1,48 @@
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> base_geometry = BaseGeometry()
+>>> base_geometry.area()
+Traceback (most recent call last):
+    ...
+Exception: area() is not implemented
+>>> base_geometry.integer_validator("my_int", 12)
+
+>>> base_geometry.integer_validator("name", "John")
+Traceback (most recent call last):
+    ...
+TypeError: name must be an integer
+>>> base_geometry.integer_validator("emptystring", "")
+Traceback (most recent call last):
+    ...
+TypeError: emptystring must be an integer
+>>> base_geometry.integer_validator("spacestring", " ")
+Traceback (most recent call last):
+    ...
+TypeError: spacestring must be an integer
+>>> base_geometry.integer_validator("floatname", 3.5)
+Traceback (most recent call last):
+    ...
+TypeError: floatname must be an integer
+>>> base_geometry.integer_validator("name", 0)
+Traceback (most recent call last):
+    ...
+ValueError: name must be greater than 0
+>>> base_geometry.integer_validator("name", -3)
+Traceback (most recent call last):
+    ...
+ValueError: name must be greater than 0
+>>> base_geometry.integer_validator("none_value", None)
+Traceback (most recent call last):
+    ...
+TypeError: none_value must be an integer
+>>> base_geometry.integer_validator("bool_value", True)
+Traceback (most recent call last):
+    ...
+TypeError: bool_value must be an integer
+>>> base_geometry.integer_validator()
+Traceback (most recent call last):
+    ...
+TypeError: None must be an integer
+>>> base_geometry.integer_validator("name")
+Traceback (most recent call last):
+    ...
+TypeError: name must be an integer
