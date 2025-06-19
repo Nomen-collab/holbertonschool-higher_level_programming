@@ -1,86 +1,65 @@
-from flask import Flask, jsonify, request
+#!/usr/bin/python3
 
-# Initialise l'application Flask
+from flask import Flask, jsonify, request
+import json
+
+
 app = Flask(__name__)
 
-# Base de données en mémoire pour stocker les utilisateurs
-# C'est un dictionnaire où la clé est le nom d'utilisateur (username)
-# et la valeur est un dictionnaire contenant toutes les informations de l'utilisateur.
-# IMPORTANT : Laissez ce dictionnaire vide pour la soumission.
+# In-memory storage for users
 users = {}
 
+
+# Route for the root URL
 @app.route('/')
 def home():
-    """
-    Route racine de l'API.
-    Retourne un message de bienvenue.
-    """
     return "Welcome to the Flask API!"
 
+
+# Route to serve JSON data with usernames
 @app.route('/data')
-def get_users_data():
-    """
-    Endpoint /data.
-    Retourne une liste de tous les noms d'utilisateurs enregistrés dans l'API.
-    """
-    # jsonify convertit la liste Python en une réponse JSON avec le bon Content-Type.
+def data():
     return jsonify(list(users.keys()))
 
+
+# Route for status
 @app.route('/status')
-def get_status():
-    """
-    Endpoint /status.
-    Retourne simplement le statut "OK" pour indiquer que l'API est fonctionnelle.
-    """
+def status():
     return "OK"
 
+
+# Route to get a specific user's data
 @app.route('/users/<username>')
 def get_user(username):
-    """
-    Endpoint dynamique /users/<username>.
-    Retourne les informations complètes d'un utilisateur spécifique.
-    Si l'utilisateur n'est pas trouvé, retourne une erreur 404.
-    """
-    user = users.get(username) # Tente de récupérer l'utilisateur par son nom d'utilisateur
+    user = users.get(username)
     if user:
-        return jsonify(user) # Si l'utilisateur existe, renvoie ses données JSON
+        return app.response_class(
+            json.dumps(user, indent=4, sort_keys=False),
+            content_type='application/json')
     else:
-        # Si l'utilisateur n'est pas trouvé, renvoie un message d'erreur avec un statut 404
         return jsonify({"error": "User not found"}), 404
 
+
+# Route to add a new user
 @app.route('/add_user', methods=['POST'])
 def add_user():
-    """
-    Endpoint /add_user.
-    Accepte les requêtes POST pour ajouter un nouvel utilisateur.
-    Attend des données JSON dans le corps de la requête.
-    Gère les erreurs (nom d'utilisateur manquant, utilisateur déjà existant).
-    """
-    # Récupère les données JSON envoyées dans le corps de la requête.
-    # Flask analyse automatiquement le JSON si le Content-Type est application/json.
-    new_user = request.get_json()
+    # Parse the incoming JSON data
+    user_data = request.get_json()
 
-    # Vérifie si les données sont présentes et si le 'username' est fourni.
-    if not new_user or 'username' not in new_user:
-        # Renvoie une erreur 400 Bad Request si le username est manquant.
+    # Ensure 'username' is included in the data
+    if not user_data.get('username'):
         return jsonify({"error": "Username is required"}), 400
 
-    username = new_user['username']
+    # Add user to the dictionary
+    users[user_data['username']] = user_data
 
-    # Vérifie si l'utilisateur existe déjà pour éviter les doublons.
-    if username in users:
-        # Renvoie une erreur 409 Conflict si l'utilisateur existe déjà.
-        return jsonify({"error": "User already exists"}), 409
+    # Return a confirmation message with the user data
+    return jsonify({
+        "message": "User added",
+        "user": user_data
+    }), 201
 
-    # Ajoute le nouvel utilisateur au dictionnaire en mémoire.
-    users[username] = new_user
 
-    # Renvoie un message de confirmation avec les données de l'utilisateur ajouté
-    # et un code de statut 201 Created pour indiquer une ressource créée.
-    return jsonify({"message": "User added", "user": new_user}), 201
-
-# Bloc pour lancer le serveur Flask en mode développement.
-# Le mode debug=True permet le rechargement automatique du serveur
-# lors des modifications du code et fournit des messages d'erreur détaillés.
+# Run the Flask development server
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
