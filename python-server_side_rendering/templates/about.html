@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App - About Us</title>
+</head>
+<body>
+    {% include 'header.html' %} {# Includes the reusable header #}
+
+    <main>
+        <h1>About Us</h1>
+        <p>
+            Welcome to the About Us page of My Flask App.
+            This application is designed as a learning exercise to demonstrate
+            the core concepts of web development using the Flask framework and Jinja2 templating engine.
+        </p>
+        <p>
+            We focus on creating simple, yet effective, web pages with reusable components
+            to ensure consistency and maintainability across the site.
+        </p>
+    </main>
+
+    {% include 'footer.html' %} {# Includes the reusable footer #}
+</body>
+</html>

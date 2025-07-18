@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App - Home</title>
+</head>
+<body>
+    {% include 'header.html' %} {# Includes the reusable header #}
+
+    <main>
+        <h1>Welcome to My Flask App</h1>
+        <p>This is a simple Flask application demonstrating basic routing and templating with Jinja2.</p>
+        <p>You can navigate to different pages:</p>
+        <ul>
+            <li>Flask</li>
+            <li>HTML</li>
+            <li>Templates</li>
+            <li>Reusable Components</li>
+        </ul>
+    </main>
+
+    {% include 'footer.html' %} {# Includes the reusable footer #}
+</body>
+</html>
