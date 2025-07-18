@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App - Product Display</title>
+    <style>
+        /* Basic CSS for table styling, can be moved to a separate .css file later */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+        .no-products {
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %} {# Includes the reusable header #}
+
+    <main>
+        <h1>Product Display</h1>
+
+        {% if error_message %}
+            {# Display an error message if one is passed from Flask #}
+            <p class="error-message">{{ error_message }}</p>
+        {% else %}
+            {# If no error, display products or "No products found" #}
+            {% if products %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.price | round(2) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                {# Message if no products are found after filtering or if file is empty #}
+                <p class="no-products">No products found.</p>
+            {% endif %}
+        {% endif %}
+    </main>
+
+    {% include 'footer.html' %} {# Includes the reusable footer #}
+</body>
+</html>
