@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App - Items List</title>
+</head>
+<body>
+    {% include 'header.html' %} {# Includes the reusable header #}
+
+    <main>
+        <h1>Items List</h1>
+
+        {% if items %}
+            {# Loop through the list of items if it's not empty #}
+            <ul>
+            {% for item in items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            {# Display a message if the list of items is empty #}
+            <p>No items found.</p>
+        {% endif %}
+    </main>
+
+    {% include 'footer.html' %} {# Includes the reusable footer #}
+</body>
+</html>
