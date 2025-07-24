@@ -5,4 +5,3 @@ const myVar = 'JavaScript is amazing'; // Changement : guillemets doubles rempla
 // Affiche la valeur de myVar dans la console
 console.log(myVar);
 // Le fichier se termine ici, sans lignes vides supplémentaires après cette ligne (juste un seul saut de ligne final)
-
