@@ -5,16 +5,12 @@
 // Le deuxième élément (index 1) est le chemin du fichier de script exécuté.
 // Les arguments passés par l'utilisateur commencent à l'index 2.
 
-// Vérifie la présence des arguments en accédant directement aux index.
+// Vérifie si le premier argument utilisateur (à l'index 2) existe.
 if (process.argv[2] === undefined) {
   // Si process.argv[2] n'existe pas, cela signifie qu'aucun argument n'a été passé.
   console.log('No argument');
-} else if (process.argv[3] === undefined) {
-  // Si process.argv[2] existe mais process.argv[3] n'existe pas,
-  // cela signifie qu'un seul argument a été passé.
-  console.log('Argument found');
 } else {
-  // Si process.argv[3] existe, cela signifie que plusieurs arguments ont été passés.
-  console.log('Arguments found');
+  // Si process.argv[2] existe, affiche sa valeur.
+  console.log(process.argv[2]);
 }
 // Le fichier se termine ici avec un seul saut de ligne final.
